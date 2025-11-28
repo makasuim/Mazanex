@@ -15,7 +15,7 @@ public class PedidoService {
     private final PedidoRepository pedidoRepository;
     private final RestTemplate restTemplate = new RestTemplate();
 
-    private final String INVENTARIO_URL = "http://localhost:8082/inventario/productos";
+    private final String INVENTARIO_URL = "https://gotys-productos-production.up.railway.app/inventario/productos";
 
     public PedidoService(PedidoRepository pedidoRepository) {
         this.pedidoRepository = pedidoRepository;
