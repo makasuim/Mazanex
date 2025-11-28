@@ -2,22 +2,23 @@
 FROM maven:3.9-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# Copiamos pom y código del microservicio
-COPY pom.xml .
-COPY src ./src
+# Copiar TODO el proyecto (incluye pom padre y módulos)
+COPY .. .
 
-# Compilamos el JAR
+# Ir a la carpeta del microservicio auth
+WORKDIR /app/auth
+
+# Compilar solo el módulo auth
 RUN mvn -q -DskipTests package
 
 # Etapa de runtime
 FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
 
-# Copiamos el jar generado
-COPY --from=build /app/target/*.jar app.jar
+# Copiamos el jar generado del módulo auth
+COPY --from=build /app/auth/target/*.jar app.jar
 
-# Puerto por defecto (solo para correr localmente con Docker)
-ENV PORT=8080
+# Puerto por defecto (Railway lo sobrescribe con la var PORT)
 EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
