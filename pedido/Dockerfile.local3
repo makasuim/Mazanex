@@ -6,7 +6,7 @@ WORKDIR /app
 COPY .. .
 
 # Ir a la carpeta del microservicio auth
-WORKDIR /app/auth
+WORKDIR /app/pedido
 
 # Compilar solo el módulo auth
 RUN mvn -q -DskipTests package
